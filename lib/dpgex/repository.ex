@@ -10,6 +10,7 @@ defmodule Dpgex.DicewareRepository do
   defp get_polish_words do
     polish_diceware_list()
     |> String.split("\n")
+    |> Enum.drop(-1)
   end
 
   defp get_english_words do
@@ -17,6 +18,7 @@ defmodule Dpgex.DicewareRepository do
     |> String.split("\n")
     |> Enum.map(fn x -> x
     |> String.slice(5..-1) end)
+    |> Enum.drop(-1)
   end
 
   def read_diceware_list(language) do
