@@ -21,10 +21,17 @@ defmodule Dpgex.DicewareRepository do
     |> Enum.drop(-1)
   end
 
-  def read_diceware_list(language) do
+  defp read_diceware_list(language) do
     case language do
       "pl" -> get_polish_words()
       _ -> get_english_words()
     end
+  end
+
+  def get_repository(language) do
+    words = read_diceware_list language
+    length = words |> Kernel.length
+    language = language
+    %{words: words, length: length, language: language}
   end
 end
