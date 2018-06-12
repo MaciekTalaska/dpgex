@@ -10,4 +10,9 @@ defmodule Dpgex.Words do
     Enum.to_list 1..words
     |> Enum.map(fn x -> get_random_word language end)
   end
+
+  def get_password(language, words_count, separator) do
+    get_random_words(language, words_count)
+    |> Enum.join(separator)
+  end
 end
