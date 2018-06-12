@@ -23,15 +23,20 @@ defmodule Dpgex.DicewareRepository do
 
   defp read_diceware_list(language) do
     case language do
-      "pl" -> get_polish_words()
-      _ -> get_english_words()
+      "pl" -> { :ok, get_polish_words()}
+      "en" -> { :ok, get_english_words()}
+      _ -> {:error, :enoent} 
     end
   end
 
   def get_repository(language) do
-    words = read_diceware_list language
-    length = words |> Kernel.length
-    language = language
-    %{words: words, length: length, language: language}
+    case read_diceware_list language do
+      {:ok, body} ->
+        words = body
+        length = words |> Kernel.length
+        language = language
+        %{words: words, length: length, language: language}
+        {:error, _} -> throw("Unable to open specified language list")
+    end
   end
 end
