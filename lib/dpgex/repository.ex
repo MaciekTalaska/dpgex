@@ -25,7 +25,7 @@ defmodule Dpgex.DicewareRepository do
     case language do
       "pl" -> { :ok, get_polish_words()}
       "en" -> { :ok, get_english_words()}
-      _ -> {:error, :enoent} 
+      _ -> {:error, :enoent}
     end
   end
 
