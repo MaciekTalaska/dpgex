@@ -1,4 +1,4 @@
-defmodule Dpgex.Words do
+defmodule Dpgex.Password do
   def get_random_word(language) do
     repository = Dpgex.DicewareRepository.get_repository language
     index = :crypto.rand_uniform 0, repository[:length]-1

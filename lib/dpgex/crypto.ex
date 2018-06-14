@@ -1,4 +1,4 @@
-defmodule Dpgex.Dices do
+defmodule Dpgex.Crypto do
 
   def throw_dice do
     :crypto.rand_uniform 1, 6
