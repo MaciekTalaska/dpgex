@@ -16,8 +16,7 @@ defmodule Dpgex.DicewareRepository do
   defp get_english_words do
     english_diceware_list()
     |> String.split("\n")
-    |> Enum.map(fn x -> x
-    |> String.slice(5..-1) end)
+    |> Enum.map( fn x -> x |> String.split |> List.last  end)
     |> Enum.drop(-1)
   end
 
