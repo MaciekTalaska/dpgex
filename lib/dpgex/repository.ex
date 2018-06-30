@@ -20,12 +20,22 @@ defmodule Dpgex.DicewareRepository do
     |> Enum.drop(-1)
   end
 
-  defp extract_language_from_filename(filename) do
-    result = Regex.named_captures(
-      ~r/(?<p>diceware-)(?<language>[a-z]{2})(?<ext>.*)/,
-      filename |> String.downcase)
+  def extract_language_from_filename(filename) do
+    result = filename
+    |> String.downcase
+    # Piping to the second argument taken from: https://shulhi.com/piping-to-second-argument-in-elixir/
+    |> (&Regex.named_captures(
+          ~r/(?<p>diceware-)(?<language>[a-z]{2})(?<ext>.*)/,
+        &1)).()
     Map.get(result, "language")
   end
+
+#  defp extract_language_from_filename(filename) do
+#    result = Regex.named_captures(
+#      ~r/(?<p>diceware-)(?<language>[a-z]{2})(?<ext>.*)/,
+#      filename |> String.downcase)
+#    Map.get(result, "language")
+#  end
 
   defp get_local_diceware_files() do
     files = case File.ls do
