@@ -21,13 +21,14 @@ defmodule Dpgex.DicewareRepository do
   end
 
   def extract_language_from_filename(filename) do
-    result = filename
+    filename
     |> String.downcase
     # Piping to the second argument taken from: https://shulhi.com/piping-to-second-argument-in-elixir/
     |> (&Regex.named_captures(
           ~r/(?<p>diceware-)(?<language>[a-z]{2})(?<ext>.*)/,
         &1)).()
-    Map.get(result, "language")
+    |> Map.get("language")
+    #Map.get(result, "language")
   end
 
 #  defp extract_language_from_filename(filename) do
