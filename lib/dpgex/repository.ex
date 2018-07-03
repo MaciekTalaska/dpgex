@@ -28,15 +28,7 @@ defmodule Dpgex.DicewareRepository do
           ~r/(?<p>diceware-)(?<language>[a-z]{2})(?<ext>.*)/,
         &1)).()
     |> Map.get("language")
-    #Map.get(result, "language")
   end
-
-#  defp extract_language_from_filename(filename) do
-#    result = Regex.named_captures(
-#      ~r/(?<p>diceware-)(?<language>[a-z]{2})(?<ext>.*)/,
-#      filename |> String.downcase)
-#    Map.get(result, "language")
-#  end
 
   defp get_local_diceware_files() do
     files = case File.ls do
