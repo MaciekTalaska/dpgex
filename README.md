@@ -14,6 +14,15 @@ In short - this method allows generating passwords that are relatively easy to r
 
 [Diceware](http://world.std.com/~reinhold/diceware.html) is a trademark of A G Reinhold. Please check the site to get more details on the method.
 
+## Diceware™ lists used:
+
+This repo includes several diceware list:
+- diceware-mi.txt
+- diceware-fi.txt
+These two lists are taken from: https://github.com/mgumz/diceware/tree/master/lists (diceware-mi.txt is originally named `diceware-maori.txt` and was renamed for consistency). 
+- diceware-en.txt - this is short list for English taken from EFF, you may obtain the origianl from: https://www.eff.org/pl/deeplinks/2016/07/new-wordlists-random-passphrases
+- diceware-pl.txt - this list is created by me. For more info: https://github.com/MaciekTalaska/diceware-pl
+
 ## Installation
 
 **Note*:** this package is not ready yet, and is not available on hex. Same is with the docs...
