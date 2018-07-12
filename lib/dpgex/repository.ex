@@ -68,11 +68,9 @@ defmodule Dpgex.DicewareRepository do
 
   def get_all_repositories do
     inner = [
-      pl: %{ language: "pl",
-             words: get_words_from_resource_file(polish_diceware_list()),
+      pl: %{ words: get_words_from_resource_file(polish_diceware_list()),
              length: Kernel.length(get_words_from_resource_file(polish_diceware_list()))},
-      en: %{ language: "en",
-             words: get_words_from_resource_file(english_diceware_list()),
+      en: %{ words: get_words_from_resource_file(english_diceware_list()),
              length: Kernel.length(get_words_from_resource_file(english_diceware_list()))}
     ]
     local = create_repository_from_local_files()
