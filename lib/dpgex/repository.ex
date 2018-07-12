@@ -66,7 +66,7 @@ defmodule Dpgex.DicewareRepository do
     |> Enum.map(fn f -> f |> from_file end)
   end
 
-  def create_repository do
+  def get_all_repositories do
     inner = [
       pl: %{ language: "pl",
              words: get_words_from_resource_file(polish_diceware_list()),
@@ -103,10 +103,5 @@ defmodule Dpgex.DicewareRepository do
       {:ok, body} -> body
       {:error, _} -> throw("No entry for language: '#{language}' found")
     end
-  end
-
-  def get_repository_by_language(language) do
-    repository = create_repository()
-    repository[String.to_atom(language)]
   end
 end
