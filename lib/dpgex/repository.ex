@@ -7,14 +7,14 @@ defmodule Dpgex.DicewareRepository do
   @en_diceware File.read! "priv/diceware-en.txt"
   defp english_diceware_list, do: @en_diceware
 
-  defp extract_words_from_file_content(words) do
-    words
+  defp extract_words_from_file_content(lines) do
+    lines
     |> String.split("\n")
     |> Enum.map(fn x -> x |> String.split |> List.last end)
     |> Enum.drop(-1)
   end
 
-  defp get_inner_diceware(lines) do
+  defp get_repository_from_file_content(lines) do
     words = extract_words_from_file_content(lines)
     %{ :length => Kernel.length(words),
        :words => extract_words_from_file_content(lines)
@@ -50,12 +50,11 @@ defmodule Dpgex.DicewareRepository do
       {:ok, body} -> body
     end
 
-    words = extract_words_from_file_content(file_content)
     language = extract_language_from_filename(filename)
 
     {String.to_atom(language),
-      %{:words => words,
-      :length => Kernel.length(words)}}
+      get_repository_from_file_content(file_content)
+    }
   end
 
   defp create_repository_from_local_files do
@@ -65,10 +64,8 @@ defmodule Dpgex.DicewareRepository do
 
   def get_all_repositories do
     inner = [
-      pl: %{ words: extract_words_from_file_content(polish_diceware_list()),
-             length: Kernel.length(extract_words_from_file_content(polish_diceware_list()))},
-      en: %{ words: extract_words_from_file_content(english_diceware_list()),
-             length: Kernel.length(extract_words_from_file_content(english_diceware_list()))}
+      pl: get_repository_from_file_content(polish_diceware_list()),
+      en: get_repository_from_file_content(english_diceware_list())
     ]
     local = create_repository_from_local_files()
     inner ++ local
@@ -86,9 +83,9 @@ defmodule Dpgex.DicewareRepository do
   defp read_diceware_list(language) do
     case language do
       "pl" -> {:ok,
-              get_inner_diceware(polish_diceware_list()) }
+              get_repository_from_file_content(polish_diceware_list()) }
       "en" -> {:ok,
-              get_inner_diceware(english_diceware_list())}
+              get_repository_from_file_content(english_diceware_list())}
        _ -> get_language_data_from_file(language)
     end
   end
