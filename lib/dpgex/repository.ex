@@ -14,7 +14,7 @@ defmodule Dpgex.DicewareRepository do
     |> Enum.drop(-1)
   end
 
-  defp get_repository_from_file_content(lines) do
+  defp repository_from_content(lines) do
     words = extract_words_from_file_content(lines)
     %{ :length => Kernel.length(words),
        :words => extract_words_from_file_content(lines)
@@ -39,12 +39,12 @@ defmodule Dpgex.DicewareRepository do
     files |> Enum.filter(fn x -> x |> String.contains?("diceware-") end)
   end
 
-  defp get_supported_languages_from_files do
+  defp available_languages_from_files do
     get_local_diceware_files()
     |> Enum.map( fn f -> {f |> extract_language_from_filename(),f} end)
   end
 
-  defp from_file(filename) do
+  defp repository_from_file(filename) do
     file_content = case File.read filename do
       {:error, reason } -> throw reason
       {:ok, body} -> body
@@ -53,40 +53,40 @@ defmodule Dpgex.DicewareRepository do
     language = extract_language_from_filename(filename)
 
     {String.to_atom(language),
-      get_repository_from_file_content(file_content)
+      repository_from_content(file_content)
     }
   end
 
-  defp create_repository_from_local_files do
+  defp repositories_from_local_files do
     get_local_diceware_files()
-    |> Enum.map(fn f -> f |> from_file end)
+    |> Enum.map(fn f -> f |> repository_from_file end)
   end
 
   def get_all_repositories do
     inner = [
-      pl: get_repository_from_file_content(polish_diceware_list()),
-      en: get_repository_from_file_content(english_diceware_list())
+      pl: repository_from_content(polish_diceware_list()),
+      en: repository_from_content(english_diceware_list())
     ]
-    local = create_repository_from_local_files()
+    local = repositories_from_local_files()
     inner ++ local
   end
 
-  defp get_language_data_from_file(language) do
-    languages = get_supported_languages_from_files()
+  defp repository_from_file_by_language(language) do
+    languages = available_languages_from_files()
     exists = languages |> Enum.any?(fn ls -> elem(ls, 0) == language end)
     case exists do
       false -> {:error, :enoent}
-      true -> {:ok, from_file(elem(languages |> Enum.find(fn l -> elem(l,0)==language end),1)) }
+      true -> {:ok, repository_from_file(elem(languages |> Enum.find(fn l -> elem(l,0)==language end),1)) }
     end
   end
 
   defp read_diceware_list(language) do
     case language do
       "pl" -> {:ok,
-              get_repository_from_file_content(polish_diceware_list()) }
+              repository_from_content(polish_diceware_list()) }
       "en" -> {:ok,
-              get_repository_from_file_content(english_diceware_list())}
-       _ -> get_language_data_from_file(language)
+              repository_from_content(english_diceware_list())}
+       _ -> repository_from_file_by_language(language)
     end
   end
 
