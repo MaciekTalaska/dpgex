@@ -6,9 +6,11 @@ defmodule Dpgex.Password do
     |> Enum.at(index)
   end
 
-  def get_random_words(language, words) do
-    Enum.to_list 1..words
-    |> Enum.map(fn x -> get_random_word language end)
+  def get_random_words(language, words_count) do
+    repository = Dpgex.DicewareRepository.get_repository language
+    words = Map.get(repository, :words)
+    nums = Dpgex.Crypto.get_random_numbers(0, Map.get(repository, :length), words_count)
+    nums |> Enum.map(fn n -> Enum.at(words, n) end)
   end
 
   def get_password(language, words_count, separator) do
