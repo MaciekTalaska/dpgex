@@ -7,7 +7,7 @@ defmodule Dpgex.DicewareRepository do
   @en_diceware File.read! "priv/diceware-en.txt"
   defp english_diceware_list, do: @en_diceware
 
-  defp get_words_from_resource_file(words) do
+  defp extract_words_from_file_content(words) do
     words
     |> String.split("\n")
     |> Enum.map(fn x -> x |> String.split |> List.last end)
@@ -15,9 +15,9 @@ defmodule Dpgex.DicewareRepository do
   end
 
   defp get_inner_diceware(lines) do
-    words = get_words_from_resource_file(lines)
+    words = extract_words_from_file_content(lines)
     %{ :length => Kernel.length(words),
-       :words => get_words_from_resource_file(lines)
+       :words => extract_words_from_file_content(lines)
     }
   end
 
@@ -45,15 +45,12 @@ defmodule Dpgex.DicewareRepository do
   end
 
   def from_file(filename) do
-    file = case File.read filename do
+    file_content = case File.read filename do
       {:error, reason } -> throw reason
       {:ok, body} -> body
     end
 
-    words = file |> String.split("\n")
-    |> Enum.map(fn x -> x |> String.split |> List.last end)
-    |> Enum.drop(-1)
-
+    words = extract_words_from_file_content(file_content)
     language = extract_language_from_filename(filename)
 
     {String.to_atom(language),
@@ -68,10 +65,10 @@ defmodule Dpgex.DicewareRepository do
 
   def get_all_repositories do
     inner = [
-      pl: %{ words: get_words_from_resource_file(polish_diceware_list()),
-             length: Kernel.length(get_words_from_resource_file(polish_diceware_list()))},
-      en: %{ words: get_words_from_resource_file(english_diceware_list()),
-             length: Kernel.length(get_words_from_resource_file(english_diceware_list()))}
+      pl: %{ words: extract_words_from_file_content(polish_diceware_list()),
+             length: Kernel.length(extract_words_from_file_content(polish_diceware_list()))},
+      en: %{ words: extract_words_from_file_content(english_diceware_list()),
+             length: Kernel.length(extract_words_from_file_content(english_diceware_list()))}
     ]
     local = create_repository_from_local_files()
     inner ++ local
