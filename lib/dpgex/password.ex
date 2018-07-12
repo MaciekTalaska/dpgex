@@ -1,7 +1,7 @@
 defmodule Dpgex.Password do
   def get_random_word(language) do
     repository = Dpgex.DicewareRepository.get_repository language
-    index = :crypto.rand_uniform 0, repository[:length]-1
+    index = Dpgex.Crypto.get_random_number 0, repository[:length]-1
     repository[:words]
     |> Enum.at(index)
   end
