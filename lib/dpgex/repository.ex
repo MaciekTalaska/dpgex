@@ -21,7 +21,7 @@ defmodule Dpgex.DicewareRepository do
     }
   end
 
-  def extract_language_from_filename(filename) do
+  defp extract_language_from_filename(filename) do
     filename
     |> String.downcase
     # Piping to the second argument taken from: https://shulhi.com/piping-to-second-argument-in-elixir/
@@ -39,12 +39,12 @@ defmodule Dpgex.DicewareRepository do
     files |> Enum.filter(fn x -> x |> String.contains?("diceware-") end)
   end
 
-  def get_supported_languages_from_files do
+  defp get_supported_languages_from_files do
     get_local_diceware_files()
     |> Enum.map( fn f -> {f |> extract_language_from_filename(),f} end)
   end
 
-  def from_file(filename) do
+  defp from_file(filename) do
     file_content = case File.read filename do
       {:error, reason } -> throw reason
       {:ok, body} -> body
@@ -58,7 +58,7 @@ defmodule Dpgex.DicewareRepository do
       :length => Kernel.length(words)}}
   end
 
-  def create_repository_from_local_files do
+  defp create_repository_from_local_files do
     get_local_diceware_files()
     |> Enum.map(fn f -> f |> from_file end)
   end
@@ -74,7 +74,7 @@ defmodule Dpgex.DicewareRepository do
     inner ++ local
   end
 
-  def get_language_data_from_file(language) do
+  defp get_language_data_from_file(language) do
     languages = get_supported_languages_from_files()
     exists = languages |> Enum.any?(fn ls -> elem(ls, 0) == language end)
     case exists do
