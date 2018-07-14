@@ -97,10 +97,16 @@ defmodule Dpgex.DicewareRepository do
     end
   end
 
+  def get_supported_languages do
+    languages_from_files = available_languages_from_files()
+      |> Enum.map(fn l -> elem(l, 0) end)
+    ["pl", "en"] ++ languages_from_files
+  end
+
   def get_repository(language) do
     case read_diceware_list language do
       {:ok, body} -> body
-      {:error, _} -> throw("No entry for language: '#{language}' found")
+      {:error, _} -> nil
     end
   end
 end
