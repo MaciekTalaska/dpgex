@@ -73,16 +73,12 @@ defmodule Dpgex.DicewareRepository do
 
   defp repository_from_file_by_language(language) do
     languages = available_languages_from_files()
-    exists = languages |> Enum.any?(fn ls -> elem(ls, 0) == language end)
-    case exists do
-      false -> {:error, :enoent}
-      true ->
-        language_and_filename = languages
-          |> Enum.find(fn l -> elem(l,0)==language end)
-        filename = elem(language_and_filename, 1)
-        repository = repository_from_file(filename)
-        # get rid of :language, only the content is needed in this case
-        repo_content = elem(repository, 1)
+    language_file = languages |> Enum.find(fn ls -> elem(ls, 0) == language end)
+    case language_file == nil do
+      true -> {:error, :enoent}
+      false ->
+        {_, filename} = language_file
+        {_, repo_content} = repository_from_file(filename)
         {:ok, repo_content}
     end
   end
