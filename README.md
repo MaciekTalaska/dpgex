@@ -25,7 +25,7 @@ These two lists are taken from: https://github.com/mgumz/diceware/tree/master/li
 
 ## Installation
 
-**Note*:** this package is not ready yet, and is not available on hex. Same is with the docs...
+**Note:** this package is not ready yet, and is not available on hex. Same is with the docs...
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 by adding `dpgex` to your list of dependencies in `mix.exs`:
