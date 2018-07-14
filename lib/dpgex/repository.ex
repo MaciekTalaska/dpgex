@@ -1,4 +1,21 @@
 defmodule Dpgex.DicewareRepository do
+  @moduledoc """
+  DicewareRepository module - exposes methods that return language specific data, such as:
+  - list of diceware words for the language
+  - length of the list
+
+  Data for English (en) and Polish (pl) is part of the module - these two languages are available by default. It is easy to add additional language by adding text file to the same directory where Dpgex is located.
+
+  The text file should follow the naming convention of: `diceware-xy.txt`, where xy is the 2 character code for the language (for example: es for Spanish, pt for Portugese, de for German etc.)
+
+  The file should have a very simple format: each line should contain one word only. It is possible to provide files with diceware indices before each word (so the format is: "index<separator>word". Separator should be either tab(s) or space(s)). If file containing indices is provided, these will be stripped out and not used.
+
+  Module exposes following methods:
+  - get_repository(language)
+  - get_all_repositories()
+  - get_supported_languages()
+  """
+
   @external_resource "priv/diceware-pl.txt"
   @pl_diceware File.read! "priv/diceware-pl.txt"
   defp polish_diceware_list, do: @pl_diceware
@@ -62,6 +79,11 @@ defmodule Dpgex.DicewareRepository do
     |> Enum.map(fn f -> f |> repository_from_file end)
   end
 
+  @doc """
+  Returns all available repositories (for all supported languages).
+
+  """
+  @spec get_all_repositories() :: [{:key, %{:length => integer, :words => [String]}}]
   def get_all_repositories do
     inner = [
       pl: repository_from_content(polish_diceware_list()),
@@ -93,12 +115,25 @@ defmodule Dpgex.DicewareRepository do
     end
   end
 
+  @doc """
+  Returns list of supported languages. Each element of the list is 2 character string. These elements could be used as parameter for calling `get_repository(language)`.
+  """
+  @spec get_supported_languages() :: [String]
   def get_supported_languages do
     languages_from_files = available_languages_from_files()
       |> Enum.map(fn l -> elem(l, 0) end)
     ["pl", "en"] ++ languages_from_files
   end
 
+  @doc """
+  Returns repository for specified language. Language should be provided as string.
+
+  If repository for specified language could be created:
+  {:ok, repository_data}
+  In case it is not possible to return requested repository, following tuple is returned:
+  {:error, _}
+  """
+  @spec get_repository(String) :: %{:length => integer, :words => [String]}
   def get_repository(language) do
     case read_diceware_list language do
       {:ok, body} -> body
