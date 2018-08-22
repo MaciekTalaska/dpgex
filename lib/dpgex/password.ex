@@ -14,7 +14,7 @@ defmodule Dpgex.Password do
   """
   @spec get_random_word(String) :: String
   def get_random_word(language) do
-    repository = Dpgex.DicewareRepository.get_repository language
+    repository = Dpgex.DicewareRepository.get_repository! language
     index = Dpgex.Crypto.get_random_number 0, repository[:length]-1
     repository[:words]
     |> Enum.at(index)
@@ -27,7 +27,7 @@ defmodule Dpgex.Password do
   """
   @spec get_random_words(String, integer) :: String
   def get_random_words(language, words_count) do
-    repository = Dpgex.DicewareRepository.get_repository language
+    repository = Dpgex.DicewareRepository.get_repository! language
     words = Map.get(repository, :words)
     Dpgex.Crypto.get_random_elements(words, words_count)
   end

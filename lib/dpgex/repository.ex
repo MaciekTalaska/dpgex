@@ -1,3 +1,7 @@
+defmodule Dpgex.DicewareRepositoryFileNotFoundException do
+  defexception message: "Diceware list for requested language not found!"
+end
+
 defmodule Dpgex.DicewareRepository do
   @moduledoc """
   DicewareRepository module - exposes methods that return language specific data, such as:
@@ -12,17 +16,18 @@ defmodule Dpgex.DicewareRepository do
 
   Module exposes following methods:
   - get_repository(language)
+  - get_repository!(language)
   - get_all_repositories()
   - get_supported_languages()
   """
 
   @external_resource "priv/diceware-pl.txt"
   @pl_diceware File.read! "priv/diceware-pl.txt"
-  defp polish_diceware_list, do: @pl_diceware
+  defp read_polish_diceware_list, do: @pl_diceware
 
   @external_resource "priv/diceware-en.txt"
   @en_diceware File.read! "priv/diceware-en.txt"
-  defp english_diceware_list, do: @en_diceware
+  defp read_english_diceware_list, do: @en_diceware
 
   defp extract_words_from_file_content(lines) do
     lines
@@ -86,8 +91,8 @@ defmodule Dpgex.DicewareRepository do
   @spec get_all_repositories() :: [{:key, %{:length => integer, :words => [String]}}]
   def get_all_repositories do
     inner = [
-      pl: repository_from_content(polish_diceware_list()),
-      en: repository_from_content(english_diceware_list())
+      pl: repository_from_content(read_polish_diceware_list()),
+      en: repository_from_content(read_english_diceware_list())
     ]
     local = repositories_from_local_files()
     inner ++ local
@@ -102,16 +107,6 @@ defmodule Dpgex.DicewareRepository do
         {_, filename} = language_file
         {_, repo_content} = repository_from_file(filename)
         {:ok, repo_content}
-    end
-  end
-
-  defp read_diceware_list(language) do
-    case language do
-      "pl" -> {:ok,
-              repository_from_content(polish_diceware_list()) }
-      "en" -> {:ok,
-              repository_from_content(english_diceware_list())}
-       _ -> repository_from_file_by_language(language)
     end
   end
 
@@ -133,11 +128,36 @@ defmodule Dpgex.DicewareRepository do
   In case it is not possible to return requested repository, following tuple is returned:
   {:error, _}
   """
-  @spec get_repository(String) :: %{:length => integer, :words => [String]}
+  @spec get_repository(String) :: {:ok , %{:length => Integer, :words => [String]}}
+  @spec get_repository(String) :: {:error, :enoent}
   def get_repository(language) do
-    case read_diceware_list language do
-      {:ok, body} -> body
-      {:error, _} -> nil
+    case language do
+      "pl" -> {:ok,
+              repository_from_content(read_polish_diceware_list()) }
+      "en" -> {:ok,
+              repository_from_content(read_english_diceware_list())}
+      _ -> repository_from_file_by_language(language)
+    end
+  end
+
+  @doc """
+  Returns repository data as map of the following structure:
+
+  `{:length Number, :words [list of words]}`
+
+  In case word list for requested language does not exist Dpgex.DicewareRepositoryFileNotFoundException is raised
+
+  """
+  @spec get_repository!(String) :: %{:length => Integer, :words => [String]}
+  def get_repository!(language) do
+    case language do
+      "pl" -> repository_from_content(read_polish_diceware_list())
+      "en" -> repository_from_content(read_english_diceware_list())
+      _ -> result = repository_from_file_by_language(language)
+        case result do
+          {:ok, body} -> body
+          {:error, _} -> raise Dpgex.DicewareRepositoryFileNotFoundException
+        end
     end
   end
 end
