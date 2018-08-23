@@ -85,8 +85,53 @@ defmodule Dpgex.DicewareRepository do
   end
 
   @doc """
-  Returns all available repositories (for all supported languages).
+  Returns list of all available repositories (for all supported languages).
 
+
+  ## Examples
+
+      iex> Dpgex.DicewareRepository.get_all_repositories
+      [
+        pl: %{
+          length: 3888,
+          words: ["absurd", "absynt", "adept", "adidas", "adonis", "adres", "adwent",
+          "aerob", "afekt", "afera", "afgan", "afisz", "afro", "agat", "agenda",
+          "agent", "agitka", "agonia", "agrest", "akacja", "akapit", "akces",
+          "akcja", "akcyza", "akord", "akryl", "akson", "aktor", "alarm", "alba",
+          "album", "aleja", "alejka", "alert", "alga", "alians", "alkowa", "alpaga",
+          "altana", "alumn", "aluzja", "amant", "amator", "ambona", "ameba",
+          "ameryka", "amfora", ...]
+        },
+        en: %{
+          length: 1296,
+          words: ["ardvark", "abandoned", "abbreviate", "abdomen", "abhorrence",
+          "abiding", "abnormal", "abrasion", "absorbing", "abundant", "abyss",
+          "academy", "accountant", "acetone", "achiness", "acid", "acoustics",
+          "acquire", "acrobat", "actress", "acuteness", "aerosol", "aesthetic",
+          "affidavit", "afloat", "afraid", "aftershave", "again", "agency",
+          "aggressor", "aghast", "agitate", "agnostic", "agonizing", "agreeing",
+          "aidless", "aimlessly", "ajar", "alarmclock", "albatross", "alchemy",
+          "alfalfa", "algae", "aliens", "alkaline", "almanac", ...]
+        },
+        fi: %{
+          length: 7776,
+          words: ["aalio", "aalto", "aaltoa", "aamen", "aamu", "aamua", "aamuja",
+          "aamuni", "aamuyo", "aani", "aania", "aanin", "aanna", "aanne", "aanny",
+          "aansi", "aanta", "aanto", "aapa", "aapala", "aapeli", "aapo", "aapoja",
+          "aari", "aaria", "aariaa", "aarin", "aarne", "aarni", "aarnio", "aarno",
+          "aaro", "aaron", "aarre", "aarta", "aarto", "aasa", "aaseja", "aasi",
+          "aasia", "aasien", "aasin", "aasini", "aasit", "aatami", ...]
+        },
+        mi: %{
+          length: 7776,
+          words: ["aehana", "aehiru", "aera", "aha", "ahakoa", "ahaku", "ahana",
+          "ahanoa", "ahanui", "ahaora", "ahapa", "ahara", "ahari", "aharia",
+          "aharoa", "ahata", "ahatia", "ahatua", "ahaura", "aheia", "aheiha",
+          "aheka", "ahene", "ahepi", "ahera", "ahere", "aheri", "ahi", "ahiahi",
+          "ahiawa", "ahiki", "ahiko", "ahima", "ahimia", "ahimoa", "ahina", "ahine",
+          "ahinui", "ahipi", "ahipu", "ahipua", "ahira", "ahirau", "ahiria", ...]
+        }
+      ]
   """
   @spec get_all_repositories() :: [{:key, %{:length => integer, :words => [String]}}]
   def get_all_repositories do
@@ -112,6 +157,11 @@ defmodule Dpgex.DicewareRepository do
 
   @doc """
   Returns list of supported languages. Each element of the list is 2 character string. These elements could be used as parameter for calling `get_repository(language)`.
+
+  ## Examples
+
+      iex> Dpgex.DicewareRepository.get_supported_languages
+      ["pl", "en", "fi", "mi"]
   """
   @spec get_supported_languages() :: [String]
   def get_supported_languages do
@@ -127,6 +177,23 @@ defmodule Dpgex.DicewareRepository do
   {:ok, repository_data}
   In case it is not possible to return requested repository, following tuple is returned:
   {:error, _}
+
+  ## Examples
+
+      iex> Dpgex.DicewareRepository.get_repository("pl")
+      {:ok,
+      %{
+      length: 3888,
+      words: ["absurd", "absynt", "adept", "adidas", "adonis", "adres", "adwent",
+      "aerob", "afekt", "afera", "afgan", "afisz", "afro", "agat", "agenda",
+      "agent", "agitka", "agonia", "agrest", "akacja", "akapit", "akces", "akcja",
+      "akcyza", "akord", "akryl", "akson", "aktor", "alarm", "alba", "album",
+      "aleja", "alejka", "alert", "alga", "alians", "alkowa", "alpaga", "altana",
+      "alumn", "aluzja", "amant", "amator", "ambona", "ameba", "ameryka", ...]
+      }}
+
+      iex> Dpgex.DicewareRepository.get_repository("pt")
+      {:error, :enoent}
   """
   @spec get_repository(String) :: {:ok , %{:length => Integer, :words => [String]}}
   @spec get_repository(String) :: {:error, :enoent}
@@ -145,8 +212,27 @@ defmodule Dpgex.DicewareRepository do
 
   `{:length Number, :words [list of words]}`
 
-  In case word list for requested language does not exist Dpgex.DicewareRepositoryFileNotFoundException is raised
+  In case word list for requested language does not exist `Dpgex.DicewareRepositoryFileNotFoundException` is raised
 
+  ## Examples
+
+  iex> Dpgex.DicewareRepository.get_repository!("en")
+  %{
+  length: 1296,
+  words: ["ardvark", "abandoned", "abbreviate", "abdomen", "abhorrence",
+  "abiding", "abnormal", "abrasion", "absorbing", "abundant", "abyss",
+  "academy", "accountant", "acetone", "achiness", "acid", "acoustics",
+  "acquire", "acrobat", "actress", "acuteness", "aerosol", "aesthetic",
+  "affidavit", "afloat", "afraid", "aftershave", "again", "agency",
+  "aggressor", "aghast", "agitate", "agnostic", "agonizing", "agreeing",
+  "aidless", "aimlessly", "ajar", "alarmclock", "albatross", "alchemy",
+  "alfalfa", "algae", "aliens", "alkaline", "almanac", "alongside", "alphabet",
+  ...]
+  }
+
+  iex> Dpgex.DicewareRepository.get_repository!("de")
+  ** (Dpgex.DicewareRepositoryFileNotFoundException) Diceware list for requested language not found!
+  (dpgex) lib/dpgex/repository.ex:159: Dpgex.DicewareRepository.get_repository!/1
   """
   @spec get_repository!(String) :: %{:length => Integer, :words => [String]}
   def get_repository!(language) do
