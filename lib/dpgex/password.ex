@@ -5,6 +5,8 @@ defmodule Dpgex.Password do
   diceware method.
 
   This module uses `Dpgex.DicewareRepository` to read list of words which are the sources for the password generation.
+
+  Functions in this module take language as a paramter (one of). Language should be provided as 2-letter string (for example: es for Spanish, en for English, de for German etc.)
   """
 
   @doc """
@@ -31,7 +33,7 @@ defmodule Dpgex.Password do
   @doc """
   Returns list of random words in selected language.
 
-  Language should be provided as 2-letter string (for example: es for Spanish, en for English, de for German etc.)
+  Language should be provided as 2-letter string which identifies language as described in ISO 639-1 (for example: "es" for Spanish, "en" for English, "de" for German etc.)
 
   ## Examples
 
@@ -51,7 +53,7 @@ defmodule Dpgex.Password do
   @doc """
   Returns password consisting of specified number of words in selected language. Words are randomly selected from the list of all words provided for the specified language. Function uses cryptographically secure random number generator.
 
-  Language should be provided as 2-letter string (for example: es for Spanish, en for English, de for German etc.)
+  Language should be provided as 2-letter string which identifies language as described in ISO 639-1 (for example: "es" for Spanish, "en" for English, "de" for German etc.)
 
   ## Examples
 
@@ -70,7 +72,7 @@ defmodule Dpgex.Password do
   @doc """
   Returns specified number of passwords, each one containing specified number of words from the specified language. Words forming passwords are separated using the character provided as separator.
 
-  Language should be provided as 2-letter string (for example: es for Spanish, en for English, de for German etc.)
+  Language should be provided as 2-letter string which identifies language as described in ISO 639-1 (for example: "es" for Spanish, "en" for English, "de" for German etc.)
 
   ## Examples
 
