@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/MaciekTalaska/dpgex.svg?branch=master)](https://travis-ci.org/MaciekTalaska/dpgex)
+
 # Dpgex Diceware™ Password Generator in Elixir
 
 This is a simple application that aims to help generating easy to remember passwords using Diceware method.
