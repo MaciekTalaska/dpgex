@@ -1,0 +1,15 @@
+env:
+  - RUST_BACKTRACE=full
+language: elixir
+elixir: '1.7.2'
+otp_release: '21.0' 
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: false
+  fast_finish: true
+cache: cargo
+script:
+  - mix test 
+
