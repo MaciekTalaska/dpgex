@@ -216,23 +216,23 @@ defmodule Dpgex.DicewareRepository do
 
   ## Examples
 
-  iex> Dpgex.DicewareRepository.get_repository!("en")
-  %{
-  length: 1296,
-  words: ["ardvark", "abandoned", "abbreviate", "abdomen", "abhorrence",
-  "abiding", "abnormal", "abrasion", "absorbing", "abundant", "abyss",
-  "academy", "accountant", "acetone", "achiness", "acid", "acoustics",
-  "acquire", "acrobat", "actress", "acuteness", "aerosol", "aesthetic",
-  "affidavit", "afloat", "afraid", "aftershave", "again", "agency",
-  "aggressor", "aghast", "agitate", "agnostic", "agonizing", "agreeing",
-  "aidless", "aimlessly", "ajar", "alarmclock", "albatross", "alchemy",
-  "alfalfa", "algae", "aliens", "alkaline", "almanac", "alongside", "alphabet",
-  ...]
-  }
+      iex> Dpgex.DicewareRepository.get_repository!("en")
+      %{
+      length: 1296,
+      words: ["ardvark", "abandoned", "abbreviate", "abdomen", "abhorrence",
+      "abiding", "abnormal", "abrasion", "absorbing", "abundant", "abyss",
+      "academy", "accountant", "acetone", "achiness", "acid", "acoustics",
+      "acquire", "acrobat", "actress", "acuteness", "aerosol", "aesthetic",
+      "affidavit", "afloat", "afraid", "aftershave", "again", "agency",
+      "aggressor", "aghast", "agitate", "agnostic", "agonizing", "agreeing",
+      "aidless", "aimlessly", "ajar", "alarmclock", "albatross", "alchemy",
+      "alfalfa", "algae", "aliens", "alkaline", "almanac", "alongside", "alphabet",
+      ...]
+      }
 
-  iex> Dpgex.DicewareRepository.get_repository!("de")
-  ** (Dpgex.DicewareRepositoryFileNotFoundException) Diceware list for requested language not found!
-  (dpgex) lib/dpgex/repository.ex:159: Dpgex.DicewareRepository.get_repository!/1
+      iex> Dpgex.DicewareRepository.get_repository!("de")
+      ** (Dpgex.DicewareRepositoryFileNotFoundException) Diceware list for requested language not found!
+      (dpgex) lib/dpgex/repository.ex:159: Dpgex.DicewareRepository.get_repository!/1
   """
   @spec get_repository!(String) :: %{:length => Integer, :words => [String]}
   def get_repository!(language) do
