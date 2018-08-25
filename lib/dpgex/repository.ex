@@ -112,24 +112,6 @@ defmodule Dpgex.DicewareRepository do
           "aggressor", "aghast", "agitate", "agnostic", "agonizing", "agreeing",
           "aidless", "aimlessly", "ajar", "alarmclock", "albatross", "alchemy",
           "alfalfa", "algae", "aliens", "alkaline", "almanac", ...]
-        },
-        fi: %{
-          length: 7776,
-          words: ["aalio", "aalto", "aaltoa", "aamen", "aamu", "aamua", "aamuja",
-          "aamuni", "aamuyo", "aani", "aania", "aanin", "aanna", "aanne", "aanny",
-          "aansi", "aanta", "aanto", "aapa", "aapala", "aapeli", "aapo", "aapoja",
-          "aari", "aaria", "aariaa", "aarin", "aarne", "aarni", "aarnio", "aarno",
-          "aaro", "aaron", "aarre", "aarta", "aarto", "aasa", "aaseja", "aasi",
-          "aasia", "aasien", "aasin", "aasini", "aasit", "aatami", ...]
-        },
-        mi: %{
-          length: 7776,
-          words: ["aehana", "aehiru", "aera", "aha", "ahakoa", "ahaku", "ahana",
-          "ahanoa", "ahanui", "ahaora", "ahapa", "ahara", "ahari", "aharia",
-          "aharoa", "ahata", "ahatia", "ahatua", "ahaura", "aheia", "aheiha",
-          "aheka", "ahene", "ahepi", "ahera", "ahere", "aheri", "ahi", "ahiahi",
-          "ahiawa", "ahiki", "ahiko", "ahima", "ahimia", "ahimoa", "ahina", "ahine",
-          "ahinui", "ahipi", "ahipu", "ahipua", "ahira", "ahirau", "ahiria", ...]
         }
       ]
   """
