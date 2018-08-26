@@ -1,12 +1,12 @@
 defmodule Dpgex.Password do
 
   @moduledoc """
-  Password library. Exposes several functions to generate random passwords using
+  Password module exposes several functions used to generate random passwords using
   diceware method.
 
   This module uses `Dpgex.DicewareRepository` to read list of words which are the sources for the password generation.
 
-  Functions in this module take language as a paramter (one of). Language should be provided as 2-letter string (for example: es for Spanish, en for English, de for German etc.)
+  All functions in this module take language as a paramter. Language should be provided as 2-letter string (for example: es for Spanish, en for English, de for German etc.)
   """
 
   @doc """
