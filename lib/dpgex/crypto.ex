@@ -3,7 +3,7 @@ defmodule Dpgex.Crypto do
   # the code is based on: https://hashrocket.com/blog/posts/the-adventures-of-generating-random-numbers-in-erlang-and-elixir
 
   @moduledoc """
-  Crypto module - offering abstraction over :rand.
+  Crypto module - abstraction over :rand.
   Uses exs1024s algorithm and :rand.seed
 
   Provides following functions:
