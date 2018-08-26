@@ -22,7 +22,7 @@ defmodule Dpgex.Password do
       iex> Dpgex.Password.get_random_word("en")
       "rugby"
   """
-  @spec get_random_word(String) :: String
+  @spec get_random_word(String.t) :: String.t
   def get_random_word(language) do
     repository = Dpgex.DicewareRepository.get_repository! language
     index = Dpgex.Crypto.get_random_number 0, repository[:length]-1
@@ -43,7 +43,7 @@ defmodule Dpgex.Password do
       iex> Dpgex.Password.get_random_words("en", 3)
       ["dryer", "senator", "utility"]
   """
-  @spec get_random_words(String, integer) :: String
+  @spec get_random_words(String.t, integer) :: String.t
   def get_random_words(language, words_count) do
     repository = Dpgex.DicewareRepository.get_repository! language
     words = Map.get(repository, :words)
@@ -63,7 +63,7 @@ defmodule Dpgex.Password do
       iex> Dpgex.Password.get_password("en", 4, "-")
       "nebula-refinery-groundhog-happiness"
   """
-  @spec get_password(String, integer, Char) :: [String]
+  @spec get_password(String.t, integer, char) :: [String.t]
   def get_password(language, words_count, separator) do
     get_random_words(language, words_count)
     |> Enum.join(separator)
@@ -83,7 +83,7 @@ defmodule Dpgex.Password do
       iex> Dpgex.Password.get_all_passwords("en", 4, "|", 2)
       ["spyglass|username|pacemaker|agnostic", "boiler|fryingpan|joystick|copier"]
   """
-  @spec get_all_passwords(String, integer, Char, integer) :: [String]
+  @spec get_all_passwords(String.t, integer, char, integer) :: [String.t]
   def get_all_passwords(language, words_count, separator, passwords_count) do
     Enum.to_list 1..passwords_count
     |> Enum.map(fn _ -> get_password(language, words_count, separator) end)

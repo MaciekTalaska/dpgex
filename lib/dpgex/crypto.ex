@@ -32,7 +32,7 @@ defmodule Dpgex.Crypto do
 
   `get_random_number` uses cryptographically secure random generator. This requires extra initialization, and thus `get_random_number` should not be used to generate many random numbers. If there is a need to generate many random numbers at once `get_random_numbers` should be used instead.
   """
-  @spec get_random_number(integer(), integer()) :: integer()
+  @spec get_random_number(integer, integer) :: integer
   def get_random_number(min, max) do
     init()
     random_number(min, max)
@@ -43,7 +43,7 @@ defmodule Dpgex.Crypto do
   Returned numbers are from the range `min` and `max` (inclusive).
   This function uses cryptographically secure random number generator.
   """
-  @spec get_random_numbers(integer(), integer(), integer()) :: [integer()]
+  @spec get_random_numbers(integer, integer, integer) :: [integer]
   def get_random_numbers(min, max, count) do
     init()
     Enum.to_list 1..count
@@ -53,7 +53,7 @@ defmodule Dpgex.Crypto do
   @doc """
   Returns specified number of random elements from the list provided as parameter. This function uses cryptographically secure random number generator.
   """
-  @spec get_random_elements([any()], integer()) :: [any()]
+  @spec get_random_elements([any], integer) :: [any]
   def get_random_elements(list, count) do
     length = Kernel.length(list)
     indices = get_random_numbers(0, length-1, count)

@@ -115,7 +115,7 @@ defmodule Dpgex.DicewareRepository do
         }
       ]
   """
-  @spec get_all_repositories() :: [{:key, %{:length => integer, :words => [String]}}]
+  @spec get_all_repositories() :: [{:key, %{:length => integer, :words => [String.t]}}]
   def get_all_repositories do
     inner = [
       pl: repository_from_content(read_polish_diceware_list()),
@@ -145,7 +145,7 @@ defmodule Dpgex.DicewareRepository do
       iex> Dpgex.DicewareRepository.get_supported_languages
       ["pl", "en", "fi", "mi"]
   """
-  @spec get_supported_languages() :: [String]
+  @spec get_supported_languages() :: [String.t]
   def get_supported_languages do
     languages_from_files = available_languages_from_files()
       |> Enum.map(fn l -> elem(l, 0) end)
@@ -177,8 +177,8 @@ defmodule Dpgex.DicewareRepository do
       iex> Dpgex.DicewareRepository.get_repository("pt")
       {:error, :enoent}
   """
-  @spec get_repository(String) :: {:ok , %{:length => Integer, :words => [String]}}
-  @spec get_repository(String) :: {:error, :enoent}
+  @spec get_repository(String.t) :: {:ok , %{:length => integer, :words => [String.t]}}
+  @spec get_repository(String.t) :: {:error, :enoent}
   def get_repository(language) do
     case language do
       "pl" -> {:ok,
@@ -216,7 +216,7 @@ defmodule Dpgex.DicewareRepository do
       ** (Dpgex.DicewareRepositoryFileNotFoundException) Diceware list for requested language not found!
       (dpgex) lib/dpgex/repository.ex:159: Dpgex.DicewareRepository.get_repository!/1
   """
-  @spec get_repository!(String) :: %{:length => Integer, :words => [String]}
+  @spec get_repository!(String.t) :: %{:length => integer, :words => [String.t]}
   def get_repository!(language) do
     case language do
       "pl" -> repository_from_content(read_polish_diceware_list())
