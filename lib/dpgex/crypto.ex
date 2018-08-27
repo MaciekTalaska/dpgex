@@ -56,6 +56,7 @@ defmodule Dpgex.Crypto do
   @spec get_random_elements([any], integer) :: [any]
   def get_random_elements(list, count) do
     length = Kernel.length(list)
+    # TODO: is Enum.take_random should be a good replacement here...
     indices = get_random_numbers(0, length-1, count)
     indices |> Enum.map(fn _ -> Enum.random(list) end)
   end
