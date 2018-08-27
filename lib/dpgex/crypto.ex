@@ -54,6 +54,9 @@ defmodule Dpgex.Crypto do
   Returns specified number of random elements from the list provided as parameter. This function uses cryptographically secure random number generator.
   """
   @spec get_random_elements([any], integer) :: [any]
+  def get_random_elements([], _) do [] end
+  def get_random_elements(_, 0) do [] end
+  def get_random_elements([], 0) do [] end
   def get_random_elements(list, count) do
     length = Kernel.length(list)
     # TODO: is Enum.take_random should be a good replacement here...

@@ -31,6 +31,19 @@ defmodule DpgexTest do
     assert length(all_0s) + length(all_1s) == count
   end
 
+
+  test "get_random_elements([], _) should return empty list" do
+    assert Dpgex.Crypto.get_random_elements([], Dpgex.Crypto.get_random_number(1, 255)) == []
+  end
+
+  test "get_random_elements(_, 0) should return empty list" do
+    assert Dpgex.Crypto.get_random_elements([1,2,3], 0) == []
+  end
+
+  test "get_random_elements([], 0) should return empty list" do
+    assert Dpgex.Crypto.get_random_elements([], 0) == []
+  end
+
   test "get_random_elements([], count) should return count amount of random elements" do
     max = Dpgex.Crypto.get_random_number(1, 255)
     count = Dpgex.Crypto.get_random_number(1, 20)
