@@ -46,8 +46,7 @@ defmodule Dpgex.Crypto do
   @spec get_random_numbers(integer, integer, integer) :: [integer]
   def get_random_numbers(min, max, count) do
     init()
-    Enum.to_list 1..count
-      |> Enum.map(fn _ -> get_random_number(min, max) end)
+    for _ <- 1..count, do: get_random_number(min, max)
   end
 
   @doc """
