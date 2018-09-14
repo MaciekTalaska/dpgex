@@ -23,6 +23,15 @@ defmodule DpgexTest do
     assert Dpgex.Crypto.get_random_number(0, 1) <= 1
   end
 
+  test "get_random_numbers(0, 0, x) returns x 0s" do
+    count = Dpgex.Crypto.get_random_number(1, 255)
+    random_numbers = Dpgex.Crypto.get_random_numbers(0, 0, count)
+    all_0s = Enum.filter(random_numbers, fn x -> x == 0 end)
+    all_1s = Enum.filter(random_numbers, fn x -> x == 1 end)
+    assert length(all_0s) == count
+    assert length(all_1s) == 0
+  end
+
   test "get_random_numbers(0, 1, x) returns x 0s" do
     count = Dpgex.Crypto.get_random_number(1, 255)
     random_numbers = Dpgex.Crypto.get_random_numbers(0, 0, count)
@@ -30,7 +39,6 @@ defmodule DpgexTest do
     all_1s = Enum.filter(random_numbers, fn x -> x == 1 end)
     assert length(all_0s) + length(all_1s) == count
   end
-
 
   test "get_random_elements([], _) should return empty list" do
     assert Dpgex.Crypto.get_random_elements([], Dpgex.Crypto.get_random_number(1, 255)) == []
