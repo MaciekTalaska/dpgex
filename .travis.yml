@@ -1,5 +1,4 @@
 env:
-  - RUST_BACKTRACE=full
 language: elixir
 elixir: '1.7.2'
 otp_release: '21.0' 
